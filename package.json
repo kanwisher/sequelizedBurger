@@ -1,0 +1,35 @@
+{
+  "name": "burger",
+  "version": "1.0.0",
+  "description": "A app where when you click a button, it makes some text about a hamburger, and then you can click a button to make that hamburger text turn into a different text",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "6.9.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanwisher/burger.git"
+  },
+  "keywords": [
+    "burger",
+    "node",
+    "mysql"
+  ],
+  "author": "David Kanwisher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kanwisher/burger/issues"
+  },
+  "homepage": "https://github.com/kanwisher/burger#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "method-override": "^2.3.8",
+    "mysql": "^2.13.0"
+  }
+}

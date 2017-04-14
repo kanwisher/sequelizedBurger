@@ -1,0 +1,39 @@
+
+<div id="content">
+    <h1 id="mainHeading"> Burger Time </h1>
+        <div id="devoured">
+            <h2>Ready to Eat</h2>
+                {{#each burgers}}
+                    {{#unless this.devoured}}
+                            <p>{{this.burger_name}} </p>
+                            <a href="/update/{{this.id}}"><button class="devourButton">Eat</button></a>
+                            
+                    {{/unless}}
+                {{/each}}
+
+        </div>
+ 
+        <div id="notDevoured">
+            <h2>Consumed</h2>
+                {{#each burgers}}
+                    {{#if this.devoured}}
+                        <p> {{this.burger_name}} </p>
+                        <a href="/delete/{{this.id}}"><button class="deleteButton">Delete</button></a>
+                                    
+                    {{/if}}
+                {{/each}}
+        </div>
+
+
+              <form action="/" method="POST" id="burgerForm">
+        <input name="burgerInput" maxlength="25" pattern=".{3,}"  required title="3 characters minimum" placeholder="Add a burger"/>
+        <button type="submit">Submit</button>
+    </form>
+
+
+ 
+</div>
+
+
+
+
