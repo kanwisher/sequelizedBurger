@@ -9,6 +9,7 @@ module.exports = function(app) {
     app.get("/", function(req, res) {
 
         db.Burgers.findAll({
+        order: 'burger_name ASC',
         include: [db.Customers]
         })
         .then(function(result){
