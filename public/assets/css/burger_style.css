@@ -132,6 +132,12 @@ input {
     vertical-align: top;
 }
 
+#eaterInput {
+width: 100px;
+font-size: .6em;
+
+}
+
 @media  screen and (max-width: 1000px){
 
      body {

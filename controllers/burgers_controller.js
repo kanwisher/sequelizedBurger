@@ -1,52 +1,92 @@
-const express = require("express");
-
-const router = express.Router(); //integrated "mini-app" found in Express
-
-const burger = require("../models/burger.js");
 
 
+var db = require("../models");
 
 
-router.get("/", function(req, res) {
-
-    burger.allBurgers(function(result){
-        console.log(result);
-
-        let hbObject = {
-            burgers : result
-        };
-
-        res.render('index', hbObject);
-    });
+module.exports = function(app) {
 
 
-});
+    app.get("/", function(req, res) {
 
-router.post("/", function(req, res) {
-    const burgerInput = req.body.burgerInput;
-    
-    burger.newBurger(burgerInput, function(result){
-        res.redirect("/");
+        db.Burgers.findAll({
+        include: [db.Customers]
+        })
+        .then(function(result){
+
+            let hbObject = {
+                burgers : result
+            };
+            res.render('index', hbObject);
+        });
+
 
     });
-});
 
-router.get("/update/:id", function(req, res) {
-    const burgerId = req.params.id;
+    app.post("/", function(req, res) {
+        const burgerInput = req.body.burgerInput;
+        
+        db.Burgers.findOrCreate({
+            where: {
+            burger_name: burgerInput
+            }
+            }).then(function(result){
+            res.redirect("/");
 
-    burger.eatBurger(burgerId, function(result){
-        res.redirect("/");
+        });
     });
-});
 
-router.get("/delete/:id", function(req, res) {
-    const burgerId = req.params.id;
+    app.post("/update/:id", function(req, res) {
+        const burgerId = req.params.id;
+        const consumer = req.body.consumer;
 
-    burger.deleteBurger(burgerId, function(result){
-        res.redirect("/");
-
+         db.Customers.findOrCreate({
+             where: {
+            author_name: consumer
+             }
+        }).then(function(result){
+            db.Burgers.update({
+            devoured: true,
+            CustomerId: result[0].id
+        }, 
+        {
+            where: {
+                id: burgerId
+            }
+        }).then(function(result){
+            res.redirect("/");
+        });
     });
-});
-module.exports = router;
+
+             });
+        
+
+    app.get("/delete/:id", function(req, res) {
+        const burgerId = req.params.id;
+
+        db.Burgers.destroy({
+            where: {
+               id: burgerId
+            }
+            }).then(function(result){
+            res.redirect("/");
+
+        });
+    });
+
+    app.get("/deleteConsumer/:id", function(req, res) {
+        const CustomerId= req.params.id;
+
+        db.Burgers.destroy({
+            where: {
+               CustomerId: CustomerId
+            }
+            }).then(function(result){
+            res.redirect("/");
+
+        });
+    });
+
+};
+
 
 

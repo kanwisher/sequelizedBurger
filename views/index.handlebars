@@ -5,8 +5,11 @@
             <h2>Ready to Eat</h2>
                 {{#each burgers}}
                     {{#unless this.devoured}}
-                            <p>{{this.burger_name}} </p>
-                            <a href="/update/{{this.id}}"><button class="devourButton">Eat</button></a>
+                            <p>{{this.burger_name}}</p>
+                        <form action="/update/{{this.id}}" method="POST" id="updateForm">
+                            <input id="eaterInput" name="consumer" placeholder="Consumer" maxlength="10" pattern=".{3,}"/>
+                          <button class="devourButton" type="submit">Eat</button>
+                          </form>
                             
                     {{/unless}}
                 {{/each}}
@@ -17,8 +20,9 @@
             <h2>Consumed</h2>
                 {{#each burgers}}
                     {{#if this.devoured}}
-                        <p> {{this.burger_name}} </p>
+                        <p> {{this.burger_name}} <small>(Consumed by: {{this.Customer.author_name}})</small> </p>
                         <a href="/delete/{{this.id}}"><button class="deleteButton">Delete</button></a>
+                        <a href="/deleteConsumer/{{this.Customer.id}}"><button class="deleteButton">Delete By Consumer</button></a>
                                     
                     {{/if}}
                 {{/each}}
